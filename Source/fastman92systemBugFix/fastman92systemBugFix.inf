@@ -1,0 +1,58 @@
+[Version]
+Signature="$Windows NT$"
+Provider=%Manufacturer%
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+DriverVer = 10/19/2022,7.0.2.4219 ; r154219
+CatalogFile=fastman92systemBugFix.cat
+
+[SourceDisksNames]
+1 = %fastman92systemBugFix.MediaDesc%
+
+[SourceDisksFiles]
+fastman92systemBugFix.sys = 1
+
+[DestinationDirs]
+DefaultDestDir = 12     ; DIRID_DRIVERS
+
+; Disabled install via [Manufacturer], not working. See [DefaultInstall].
+;[Manufacturer]
+;;x86   %ORACLE%=fastman92systemBugFix
+;;amd64 %ORACLE%=fastman92systemBugFix, NTamd64
+;
+;;x86   [fastman92systemBugFix]
+;;amd64 [fastman92systemBugFix.NTamd64]
+;%ORACLE%=fastman92systemBugFix_Install
+;
+;[fastman92systemBugFix_Install]
+;CopyFiles = @fastman92systemBugFix.sys
+;
+;[fastman92systemBugFix_Install.Services]
+;AddService = fastman92systemBugFix,,fastman92systemBugFix.Service
+
+[DefaultInstall.ntamd64]
+CopyFiles = @fastman92systemBugFix.sys
+
+[DefaultInstall.ntamd64.Services]
+AddService = fastman92systemBugFix,,fastman92systemBugFix.Service
+
+[fastman92systemBugFix.AddRegistry]
+; HKLM, System\CurrentControlSet\Control\Class\{36FC9E60-C465-11CF-8056-444553540000}, UpperFilters, 0x00010000, "fastman92systemBugFix", "mouclass"
+
+[fastman92systemBugFix.Service]
+DisplayName    = %fastman92systemBugFix.SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_IGNORE%
+ServiceBinary  = %12%\fastman92systemBugFix.sys
+AddReg         = fastman92systemBugFix.AddRegistry
+
+[Strings]
+fastman92systemBugFix.SvcDesc       = "fastman92 system bug fix Service"
+fastman92systemBugFix.MediaDesc     = "fastman92 system bug fix Installation Media"
+Manufacturer                  = "fastman92"
+
+; Useful constants
+SERVICE_KERNEL_DRIVER = 1
+SERVICE_BOOT_START = 0
+SERVICE_ERROR_IGNORE  = 0
